@@ -16,32 +16,16 @@ namespace Business.Concrete
         {
             _brandDal = brandDal;
         }
+
         public void Add(Brand brand)
         {
             _brandDal.Add(brand);
+        }
 
-        }
-        public void Delete(int brandId)
+        public List<Brand> GetAll()
         {
-            _brandDal.Delete(brandId);
-        }
-        public void GetAll()
-        {
-            foreach (var brand in _brandDal.GetAll())
-            {
-                Console.WriteLine("\n------------" + brand.BrandId + "----------\n");
-                Console.WriteLine("BrandId : " + brand.BrandId);
-                Console.WriteLine("BrandName : " + brand.BrandName);
-
-            }
-        }
-        public List<Brand> GetById(int BrandId)
-        {
-            return _brandDal.GetById(BrandId);
-        }
-        public void Update(Brand brand)
-        {
-            _brandDal.Update(brand);
+            return _brandDal.GetAll();     
+                
         }
     }
 }
