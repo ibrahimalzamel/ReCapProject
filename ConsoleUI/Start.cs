@@ -23,8 +23,10 @@ namespace ConsoleUI
             //    ModelYear = new DateTime(2010, 2, 2),
             //    DailyPrice = 20000,
             //    Description = "test"
-            //});
-            foreach (var car in car1.GetAll().Data)
+            //});            
+            var result = car1.GetAll();
+
+            foreach (var car in result.Data)
             {
                 Console.WriteLine("Car ID : " + car.CarId);
                 Console.WriteLine("BrandId : " + car.BrandId);
