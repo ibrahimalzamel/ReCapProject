@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Core.Utilities.Results;
+using Core.Utilities.DataResults;
+using Business.Constants;
 
 namespace Business.Concrete
 {
@@ -17,15 +20,31 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public void Add(Brand brand)
+        public IResult Add(Brand brand)
         {
-            _brandDal.Add(brand);
+            return new SuccessResult(SuccessMessages.ProductAdded);
         }
 
-        public List<Brand> GetAll()
+        public IResult Delet(Brand brand)
         {
-            return _brandDal.GetAll();     
-                
+            return new SuccessResult(SuccessMessages.ProductAdded);
         }
+
+        public IDataResult<List<Brand>> GetAll()
+        {
+            return new SuccessDataResult<List<Brand>>(SuccessMessages.ProductListed);
+        }
+
+        public IDataResult<Brand> GetByID(int id)
+        {
+            return new SuccessDataResult<Brand>(_brandDal.Get(b=>b.BrandId == id ));
+
+        }
+
+        public IResult Update(Brand brand)
+        {
+            return new SuccessResult(SuccessMessages.ProductAdded);
+        }
+
     }
 }

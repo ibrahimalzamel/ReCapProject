@@ -1,6 +1,10 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.DataResults;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,24 +20,51 @@ namespace Business.Concrete
             _carDal = carDal; 
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
+            if (car.CarId<2)
+            {
+                //magic strings
+                return new SuccessResult(SuccessMessages.ProductAdded);
+            }
             _carDal.Add(car);
+
+            return new ErrorResult(ErrorMessages.MaintenanceTime);
         }
 
-        public List<Car> GetAll()
+        public IResult Delete(Car car)
         {
-            return _carDal.GetAll();
+            return new SuccessResult(SuccessMessages.ProductAdded);
         }
 
-        public List<Car> GetAllByBrandId(int Id)
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll(c => c.BrandId == Id);
+            return new SuccessDataResult<List<Car>>(SuccessMessages.ProductAdded);
         }
 
-        public List<Car> GetByDailyPrice(decimal min, decimal max)
+        public IDataResult<List<Car>> GetAllByBrandId(int id)
         {
-            return _carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max);
+            return new SuccessDataResult<List<Car>>(SuccessMessages.ProductAdded);
+        }
+
+        public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
+        {
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.DailyPrice>=min && c.DailyPrice<=max),SuccessMessages.ProductAdded);
+        }
+
+        public IDataResult<Car> GetByID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDataResult<List<CarDetailDto>> GetOrdersDetailDtos()
+        {
+            return new ErrorDataResult<List<CarDetailDto>>(ErrorMessages.MaintenanceTime);
+        }
+
+        public IResult Update(Car car)
+        {
+            return new SuccessResult(SuccessMessages.ProductAdded);
         }
     }
 }
