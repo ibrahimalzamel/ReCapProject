@@ -29,9 +29,8 @@ namespace ConsoleUI
                 Console.WriteLine("Car ID : " + car.CarId);
                 Console.WriteLine("BrandId : " + car.BrandId);
                 Console.WriteLine("Color ID : " + car.ColorId);
-                Console.WriteLine("Model year : " + car.ModelYear);
                 Console.WriteLine("Daily Price : " + car.DailyPrice);
-                Console.WriteLine("Description : " + car.Description);
+                Console.WriteLine("Description : " + car.Descriptio);
 
             }
 
