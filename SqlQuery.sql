@@ -13,6 +13,26 @@ CREATE TABLE Cars (CarId int PRIMARY KEY NOT NULL ,
 				   ModelYaer DATETIME NOT NULL,
 				   DailyPrice DECIMAL NOT NULL,
 				   Descriptio DECIMAL NOT NULL );
+CREATE TABLE Users(UserID int  PRIMARY KEY NOT NULL ,
+					FirstName CHAR(20) NOT NULL,
+					LastName CHAR(20) NOT NULL,
+					Email CHAR(30) NOT NULL,
+					Password CHAR(30) NOT NULL,	
+					);
+
+CREATE TABLE Customers(
+					CustomersID int  PRIMARY KEY NOT NULL ,
+				    UserID INT FOREIGN KEY REFERENCES Users(UserID) NoT NULL , 
+					CompanyName CHAR(30) NOT NULL
+					);
+CREATE TABLE Rentals(
+					 RentalsID int  PRIMARY KEY NOT NULL ,
+				     CarId INT FOREIGN KEY REFERENCES Cars(CarId) NoT NULL , 
+				     CustomersID INT FOREIGN KEY REFERENCES Customers(CustomersID) NoT NULL , 
+					 RentDate DATETIME NOT NULL,
+					 ReturnDate DATETIME 
+					);
+
 INSERT INTO Colors(ColorId , ColorName)VALUES(1,'Black');
 INSERT INTO Colors(ColorId , ColorName)VALUES(2,'Blue');
 INSERT INTO Colors(ColorId , ColorName)VALUES(3,'Green');

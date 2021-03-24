@@ -24,23 +24,23 @@ namespace Business.Concrete
         {
             _brandDal.Add(brand);
 
-            return new SuccessResult(SuccessMessages.ProductAdded);
+            return new SuccessResult(SuccessMessages.BrandAdded);
         }
 
-        public IResult Delet(Brand brand)
+        public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
-            return new SuccessResult(SuccessMessages.ProductAdded);
+            return new SuccessResult(SuccessMessages.BrandDeleted);
         }
 
         public IDataResult<List<Brand>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),SuccessMessages.ProductListed);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),SuccessMessages.BrandsListed);
         }
 
         public IDataResult<Brand> GetByID(int id)
         {
-            return new SuccessDataResult<Brand>(_brandDal.Get(b=>b.BrandId == id ));
+            return new SuccessDataResult<Brand>(_brandDal.Get(b=>b.BrandId == id ),SuccessMessages.BrandsListed);
 
         }
 
@@ -48,7 +48,7 @@ namespace Business.Concrete
         {
             _brandDal.Update(brand);
 
-            return new SuccessResult(SuccessMessages.ProductAdded);
+            return new SuccessResult(SuccessMessages.BrandUpdate);
         }
 
     }

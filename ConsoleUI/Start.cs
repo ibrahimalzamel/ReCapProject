@@ -13,17 +13,8 @@ namespace ConsoleUI
         public void CarTest()
         {
 
-            // ***** Car Class manager ******
             CarManager car1 = new CarManager(new EfCarDal());
-            //car1.Add(new Car
-            //{
-            //    CarId = 30,
-            //    BrandId = 20,
-            //    ColorId = 10,
-            //    ModelYear = new DateTime(2010, 2, 2),
-            //    DailyPrice = 20000,
-            //    Description = "test"
-            //});            
+                    
             var result = car1.GetAll();
 
             foreach (var car in result.Data)
@@ -36,15 +27,7 @@ namespace ConsoleUI
 
             }
 
-            //foreach (var car in car1.GetAllByBrandId(5).Data)
-            //{
-            //    Console.WriteLine("BrandId : " + car.BrandId);
-            //}
-
-            //foreach (var car in car1.GetByDailyPrice(20, 50).Data)
-            //{
-            //    Console.WriteLine("Daily Price : " + car.DailyPrice);
-            //}
+           
         }
 
         public void ColorTest()

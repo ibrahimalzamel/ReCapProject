@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfUserDal :  EfEntityrepositoryBase<Users, NorthwindContext>,IUserDal
+    public class EfUserDal :  EfEntityrepositoryBase<User, NorthwindContext>,IUserDal
     {
 
     }

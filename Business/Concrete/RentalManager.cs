@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.DataResults;
 using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -8,31 +10,39 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    class RentalManager : IRentalService
+    public class RentalManager : IRentalService
     {
+        IRentalDal _rentalDal;
+        public RentalManager(IRentalDal rentalDal)
+        {
+            _rentalDal = rentalDal;
+        }
         public IResult Add(Rentals rental)
         {
-            throw new NotImplementedException();
+            _rentalDal.Add(rental);
+            return new SuccessResult(SuccessMessages.RentalAdded);
         }
 
-        public IResult Delet(Rentals rental)
+        public IResult Delete(Rentals rental)
         {
-            throw new NotImplementedException();
+            _rentalDal.Delete(rental);
+            return new SuccessResult(SuccessMessages.RentalDeleted);
         }
 
         public IDataResult<List<Rentals>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Rentals>>(_rentalDal.GetAll(), SuccessMessages.RentalListed);
         }
 
         public IDataResult<Rentals> GetById(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Rentals>(_rentalDal.Get(r => r.RentalsID == id), SuccessMessages.RentalListed);
         }
 
         public IResult Update(Rentals rental)
         {
-            throw new NotImplementedException();
+            _rentalDal.Update(rental);
+            return new SuccessResult(SuccessMessages.RentalUpdated);
         }
     }
 }

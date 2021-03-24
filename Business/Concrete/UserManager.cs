@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.DataResults;
 using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,29 +12,50 @@ namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        public IResult Add(Users user)
+        IUserDal _userDal;
+
+        public UserManager(IUserDal userDal)
         {
-            throw new NotImplementedException();
+            _userDal = userDal;
+        }
+        public IResult Add(User user)
+        {
+            if (user.FirstName == "" || user.LastName == "")
+            {
+                return new ErrorResult(ErrorMessages.FirstNameLastNameInvalid);
+            }
+
+            _userDal.Add(user);
+            return new SuccessResult(SuccessMessages.UserAdded);
         }
 
-        public IResult Delet(Users user)
+        public IResult Delete(User user)
         {
-            throw new NotImplementedException();
+            if (user.UserID != 0)
+            {
+                _userDal.Delete(user);
+                return new SuccessResult(SuccessMessages.UserDeleted);
+            }
+            else
+            {
+                return new ErrorResult(ErrorMessages.UserNotDeleted);
+            }
         }
 
-        public IDataResult<List<Users>> GetAll()
+        public IDataResult<List<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(), SuccessMessages.UsersListed);
         }
 
-        public IDataResult<Users> GetById(int id)
+        public IDataResult<User> GetById(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<User>(_userDal.Get(u=>u.UserID==id),SuccessMessages.UsersListed);
         }
 
-        public IResult Update(Users user)
+        public IResult Update(User user)
         {
-            throw new NotImplementedException();
+            _userDal.Update(user);
+            return new SuccessResult(SuccessMessages.UserUpdated);
         }
     }
 }

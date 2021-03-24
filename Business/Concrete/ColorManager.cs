@@ -22,31 +22,30 @@ namespace Business.Concrete
         public IResult Add(Color Color)
         {
             _colorDal.Add(Color);
-
-            return new SuccessResult(SuccessMessages.ProductAdded);
+            return new SuccessResult(SuccessMessages.ColorAdded);
         }
 
-        public IResult Delet(Color Color)
+        public IResult Delete(Color Color)
         {
-            _colorDal.Delete(Color);
 
-            return new SuccessResult(SuccessMessages.ProductAdded);
+            _colorDal.Delete(Color);
+            return new SuccessResult(SuccessMessages.ColorDeleted);
         }
 
         public IDataResult<List<Color>> GetAll()
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(),SuccessMessages.ProductListed);
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(),SuccessMessages.ColorListed);
         }
 
         public IDataResult<Color> GetById(int id)
         {
-            return new SuccessDataResult<Color>(_colorDal.Get(c =>c.ColorId == id));
+            return new SuccessDataResult<Color>(_colorDal.Get(c =>c.ColorId == id),SuccessMessages.ColorListed);
         }
 
         public IResult Update(Color Color)
         {
             _colorDal.Update(Color);
-            return new SuccessResult(SuccessMessages.ProductAdded);
+            return new SuccessResult(SuccessMessages.ColorUpdate);
         }
     }
 }
