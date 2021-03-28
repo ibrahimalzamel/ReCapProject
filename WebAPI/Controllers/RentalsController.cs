@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
             _rentalService = rentalService;
         }
 
-
+        //GetAll
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
@@ -33,11 +33,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-
-        [HttpGet("getbyid")]
-        public IActionResult GetById(int id)
+        //GetCarRentalDetails
+        [HttpGet("getcarrentaldetails")]
+        public IActionResult GetCarRentalDetails()
         {
-            var result = _rentalService.GetById(id);
+            var result = _rentalService.GetCarRentalDetails();
             if (result.Success)
             {
                 return Ok(result);
@@ -45,6 +45,43 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        //GetById
+        [HttpGet("getbyid")]
+        public IActionResult GetById(int id)
+        {
+            var result = _rentalService.GetByID(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        // GetByCarId
+        [HttpGet("getbycarid")]
+        public IActionResult GetByCarId(int id)
+        {
+            var result = _rentalService.GetByCarId(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        // GetByCustomerId
+        [HttpGet("getbycustomerid")]
+        public IActionResult GetByCustomerId(int id)
+        {
+            var result = _rentalService.GetByCustomerId(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        //Add
         [HttpPost("add")]
         public IActionResult Add(Rentals rental)
         {
@@ -57,6 +94,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        //Delete
         [HttpPost("delete")]
         public IActionResult Delete(Rentals rental)
         {
@@ -68,6 +106,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+      
+        //Update
         [HttpPost("update")]
         public IActionResult Update(Rentals rental)
         {

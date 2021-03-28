@@ -12,10 +12,15 @@ namespace Business.ValidationRules.FluentValidation
         {
             RuleFor(c => c.BrandId).NotEmpty();
             RuleFor(c => c.ColorId).NotEmpty();
+            RuleFor(c => c.Descriptio).NotEmpty();
+            RuleFor(c => c.ModelYaer).NotEmpty();
+            RuleFor(c => c.DailyPrice).NotEmpty();
+
             RuleFor(c => c.Descriptio).MinimumLength(2);
+            RuleFor(c => c.Descriptio).MaximumLength(50);
             RuleFor(c => c.DailyPrice).GreaterThan(0);
-            RuleFor(c => c.DailyPrice).GreaterThanOrEqualTo(200).When(c => c.BrandId==3).WithMessage("brand id = 3 ise fiyat 200 olmalı");
-            RuleFor(c => c.Descriptio).Must(StartWithA).WithMessage("açklama A harf ile başlamali ...!!! ");
+            // RuleFor(c => c.DailyPrice).GreaterThanOrEqualTo(200).When(c => c.BrandId==3).WithMessage("brand id = 3 ise fiyat 200 olmalı");
+            // RuleFor(c => c.Descriptio).Must(StartWithA).WithMessage("açklama A harf ile başlamali ...!!! ");
         }
 
         private bool StartWithA(string arg)

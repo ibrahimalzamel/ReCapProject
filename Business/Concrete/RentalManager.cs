@@ -1,9 +1,12 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.DataResults;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +20,8 @@ namespace Business.Concrete
         {
             _rentalDal = rentalDal;
         }
+
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rentals rental)
         {
             _rentalDal.Add(rental);
@@ -34,9 +39,24 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rentals>>(_rentalDal.GetAll(), SuccessMessages.RentalListed);
         }
 
-        public IDataResult<Rentals> GetById(int id)
+        public IDataResult <List<Rentals>> GetByCarId(int id)
+        {
+            return new SuccessDataResult<List<Rentals>>(_rentalDal.GetAll(r => r.CarId == id), SuccessMessages.RentalListed);
+        }
+
+        public IDataResult <List<Rentals>> GetByCustomerId(int id)
+        {
+            return new SuccessDataResult<List<Rentals>>(_rentalDal.GetAll(r => r.CustomersID == id), SuccessMessages.RentalListed);
+        }
+
+        public IDataResult<Rentals> GetByID(int id)
         {
             return new SuccessDataResult<Rentals>(_rentalDal.Get(r => r.RentalsID == id), SuccessMessages.RentalListed);
+        }
+
+        public IDataResult<List<CarRentalDetailDto>> GetCarRentalDetails()
+        {
+            return new SuccessDataResult<List<CarRentalDetailDto>>(_rentalDal.GetCarRentalDetails(), SuccessMessages.RentalListed);
         }
 
         public IResult Update(Rentals rental)
@@ -44,5 +64,7 @@ namespace Business.Concrete
             _rentalDal.Update(rental);
             return new SuccessResult(SuccessMessages.RentalUpdated);
         }
+
+      
     }
 }

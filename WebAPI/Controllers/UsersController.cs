@@ -20,6 +20,7 @@ namespace WebAPI.Controllers
             _userService = userService;
         }
 
+        //GetAll
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
@@ -31,11 +32,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-
+        //GetById
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
-            var result = _userService.GetById(id);
+            var result = _userService.GetByID(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -43,6 +44,42 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        //GetByUserName
+        [HttpGet("getbyusername")]
+        public IActionResult GetAllByUserName(string name)
+        {
+            var result = _userService.GetAllByUserName(name);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        //GetByUserLastName
+        [HttpGet("getbylastname")]
+        public IActionResult GetAllByUserLastName(string name)
+        {
+            var result = _userService.GetAllByUserLastName(name);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+        [HttpGet("getbyusername")]
+        public IActionResult GetByUserName(string name)
+        {
+            var result = _userService.GetByUserName(name);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        //Add
         [HttpPost("add")]
         public IActionResult Add(User user)
         {
@@ -55,6 +92,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        //Delete
         [HttpPost("delete")]
         public IActionResult Delete(User user)
         {
@@ -66,6 +104,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+        
+        //Update
         [HttpPost("update")]
         public IActionResult Update(User user)
         {

@@ -1,18 +1,19 @@
-﻿using Core.Utilities.DataResults;
+﻿using Core.Utilities.Business;
+using Core.Utilities.DataResults;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Business.Abstract
 {
-    public interface ICustomerService 
+    public interface ICustomerService : ICrudService<Customers>
     {
-        IResult Add(Customers customer);
-        IResult Delete(Customers customer);
-        IResult Update(Customers customer);
-        IDataResult<List<Customers>> GetAll();
-        IDataResult<Customers> GetById(int id);
+       
+        IDataResult<List<Customers>> GetByUserId(int id);
+        IDataResult<List<CustomerDetailDto>> GetCustomerDetails();
+
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.DataResults;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -18,13 +20,10 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
+
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
-            if (user.FirstName == "" || user.LastName == "")
-            {
-                return new ErrorResult(ErrorMessages.FirstNameLastNameInvalid);
-            }
-
             _userDal.Add(user);
             return new SuccessResult(SuccessMessages.UserAdded);
         }
@@ -47,15 +46,30 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), SuccessMessages.UsersListed);
         }
 
-        public IDataResult<User> GetById(int id)
+        public IDataResult<User> GetByID(int id)
         {
             return new SuccessDataResult<User>(_userDal.Get(u=>u.UserID==id),SuccessMessages.UsersListed);
+        }
+
+        public IDataResult<List<User>> GetAllByUserLastName(string lastName)
+        {
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(u=>u.LastName==lastName), SuccessMessages.UsersListed);
+        }
+
+        public IDataResult<List<User>> GetAllByUserName(string name)
+        {
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(u => u.FirstName == name), SuccessMessages.UsersListed);
         }
 
         public IResult Update(User user)
         {
             _userDal.Update(user);
             return new SuccessResult(SuccessMessages.UserUpdated);
+        }
+
+        public IDataResult<User> GetByUserName(string name)
+        {
+            return new SuccessDataResult<User>(_userDal.Get(u => u.FirstName == name), SuccessMessages.UsersListed);
         }
     }
 }

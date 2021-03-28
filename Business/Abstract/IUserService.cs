@@ -1,4 +1,5 @@
-﻿using Core.Utilities.DataResults;
+﻿using Core.Utilities.Business;
+using Core.Utilities.DataResults;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using System;
@@ -7,12 +8,12 @@ using System.Text;
 
 namespace Business.Abstract
 {
-    public interface IUserService
+    public interface IUserService : ICrudService<User>
     {
-        IResult Add(User user);
-        IResult Delete(User user);
-        IResult Update(User user);
-        IDataResult<List<User>> GetAll();
-        IDataResult<User> GetById(int id);
+      
+        IDataResult<List<User>> GetAllByUserName(string name);
+        IDataResult<User> GetByUserName(string name);
+        IDataResult<List<User>> GetAllByUserLastName(string lastName);
+     
     }
 }

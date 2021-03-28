@@ -8,6 +8,8 @@ using System.Linq;
 using Core.Utilities.Results;
 using Core.Utilities.DataResults;
 using Business.Constants;
+using Core.Aspects.Autofac.Validation;
+using Business.ValidationRules.FluentValidation;
 
 namespace Business.Concrete
 {
@@ -19,11 +21,11 @@ namespace Business.Concrete
         {
             _brandDal = brandDal;
         }
-
+      
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
             _brandDal.Add(brand);
-
             return new SuccessResult(SuccessMessages.BrandAdded);
         }
 
@@ -36,6 +38,11 @@ namespace Business.Concrete
         public IDataResult<List<Brand>> GetAll()
         {
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),SuccessMessages.BrandsListed);
+        }
+
+        public IDataResult<List<Brand>> GetBrandName(string brandName)
+        {
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(b => b.BrandName == brandName), SuccessMessages.BrandsListed);
         }
 
         public IDataResult<Brand> GetByID(int id)
