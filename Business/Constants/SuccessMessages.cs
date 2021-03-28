@@ -11,6 +11,11 @@ namespace Business.Constants
         private static string carsListed = "Mevcut Araçlar Listeleniyor...";
         private static string carDeleted = "Araç silindi";
 
+        private static string carImageAdded = "Araç Resimleri Eklendi";
+        private static string carImageUpdated = "Araç Resimleri Güncellendi";
+        private static string carsImageListed = "Mevcut Araçlar Resimleri Listeleniyor...";
+        private static string carImageDeleted = "Araç Resimleri silindi";
+
         private static string brandAdded = "Marka başarıyla veritabanına eklendi.";
         private static string brandUpdate = "Marka başarıyla güncellendi.";
         private static string brandsListed = "Markalar Listeleniyor...";
@@ -64,5 +69,9 @@ namespace Business.Constants
         public static string RentalUpdated { get => rentalUpdated; set => rentalUpdated = value; }
         public static string RentalListed { get => rentalListed; set => rentalListed = value; }
         public static string RentalDeleted { get => rentalDeleted; set => rentalDeleted = value; }
+        public static string CarImageAdded { get => carImageAdded; set => carImageAdded = value; }
+        public static string CarImageUpdated { get => carImageUpdated; set => carImageUpdated = value; }
+        public static string CarsImageListed { get => carsImageListed; set => carsImageListed = value; }
+        public static string CarImageDeleted { get => carImageDeleted; set => carImageDeleted = value; }
     }
 }
