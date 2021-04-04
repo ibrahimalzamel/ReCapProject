@@ -2,6 +2,7 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Entities.Concrete;
 using Core.Utilities.DataResults;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -14,7 +15,7 @@ namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        IUserDal _userDal;
+        IUserDal _userDal;  
 
         public UserManager(IUserDal userDal)
         {
@@ -30,7 +31,7 @@ namespace Business.Concrete
 
         public IResult Delete(User user)
         {
-            if (user.UserID != 0)
+            if (user.Id != 0)
             {
                 _userDal.Delete(user);
                 return new SuccessResult(SuccessMessages.UserDeleted);
@@ -48,7 +49,7 @@ namespace Business.Concrete
 
         public IDataResult<User> GetByID(int id)
         {
-            return new SuccessDataResult<User>(_userDal.Get(u=>u.UserID==id),SuccessMessages.UsersListed);
+            return new SuccessDataResult<User>(_userDal.Get(u=>u.Id==id),SuccessMessages.UsersListed);
         }
 
         public IDataResult<List<User>> GetAllByUserLastName(string lastName)
@@ -70,6 +71,16 @@ namespace Business.Concrete
         public IDataResult<User> GetByUserName(string name)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.FirstName == name), SuccessMessages.UsersListed);
+        }
+
+        public User GetByMail(string email)
+        {
+            return _userDal.Get(u => u.Email == email);
+        }
+
+        public List<OperationClaim> GetClaims(User user)
+        {
+            return _userDal.GetClaims(user);
         }
     }
 }

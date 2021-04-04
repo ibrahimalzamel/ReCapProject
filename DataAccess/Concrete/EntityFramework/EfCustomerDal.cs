@@ -17,11 +17,11 @@ namespace DataAccess.Concrete.EntityFramework
             using (NorthwindContext context = new NorthwindContext())
             {
                 var result = from cus in filter is null ? context.Customers : context.Customers.Where(filter)
-                             join usr in context.Users on cus.UserID equals usr.UserID
+                             join usr in context.Users on cus.UserID equals usr.Id
                              select new CustomerDetailDto
                              {
                                  CustomerId = cus.CustomersID,
-                                 UserId = usr.UserID,
+                                 UserId = usr.Id,
                                  UserName = usr.FirstName,
                                  UserLastName = usr.LastName,
                                  CompanyName = cus.CompanyName

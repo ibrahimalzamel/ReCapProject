@@ -6,6 +6,7 @@ namespace Business.Constants
 {
     public static class ErrorMessages
     {
+        private static string AuthorizationDenied = "Yetkiniz Yok.";
 
         private static string checkDailyPrice = "Günlük kira ücreti 0'dan fazla olmalı";
         private static string carNameInvalid = "Araç ismi minimum 2 karakter olmalıdır";
@@ -36,5 +37,6 @@ namespace Business.Constants
         public static string MaintenanceTime { get => maintenanceTime; set => maintenanceTime = value; }
         public static string CarImageLimitExceeded { get => carImageLimitExceeded; set => carImageLimitExceeded = value; }
         public static string ProductNameInvalid { get => productNameInvalid; set => productNameInvalid = value; }
+        public static string AuthorizationDenied1 { get => AuthorizationDenied; set => AuthorizationDenied = value; }
     }
 }

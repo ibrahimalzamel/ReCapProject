@@ -42,7 +42,7 @@ namespace Business.Concrete
 
         public IDataResult<CarImage> GetByID(int Id)
         {
-            return new SuccessDataResult<CarImage>(_CarImageDal.Get(c => c.ImageId == Id), SuccessMessages.CarsImageListed);
+            return new SuccessDataResult<CarImage>(_CarImageDal.Get(c => c.Id == Id), SuccessMessages.CarsImageListed);
         }
 
         public IResult Update(CarImage carImage)
@@ -52,7 +52,7 @@ namespace Business.Concrete
         }
         private IResult CheckIfCarImageConuntOfimageCorrect(int imageId)
         {
-            var result = _CarImageDal.GetAll(c => c.ImageId == imageId);
+            var result = _CarImageDal.GetAll(c => c.Id == imageId);
             return new SuccessResult();
         }
     }
