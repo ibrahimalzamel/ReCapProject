@@ -32,11 +32,11 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        //GetById
-        [HttpGet("getbyid")]
-        public IActionResult GetById(int id)
+        //GetImagesByCarId
+        [HttpGet("getImagesByCarId")]
+        public IActionResult GetImagesByCarId(int id)
         {
-            var result = _carImageService.GetByID(id);
+            var result = _carImageService.GetImagesByCarId(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -46,21 +46,22 @@ namespace WebAPI.Controllers
 
         //Add
         [HttpPost("add")]
-        public IActionResult Add(CarImage carImage)
+        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImage)
         {
-            var result = _carImageService.Add(carImage);
+            var result = _carImageService.Add(file,carImage);
 
             if (result.Success)
             {
                 return Ok(result);
             }
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
 
         //Delete
         [HttpPost("delete")]
-        public IActionResult Delete(CarImage carImage)
+        public IActionResult Delete([FromForm] int id)
         {
+            var carImage = _carImageService.Get(id).Data;
             var result = _carImageService.Delete(carImage);
 
             if (result.Success)
@@ -72,15 +73,16 @@ namespace WebAPI.Controllers
 
         //Update
         [HttpPost("update")]
-        public IActionResult Update(CarImage carImage)
+        public IActionResult Update([FromForm(Name = ("Image"))] IFormFile file, [FromForm] int carId)
         {
-            var result = _carImageService.Update(carImage);
+            var carImage = _carImageService.Get(carId).Data;
+            var result = _carImageService.Update(file,carImage);
 
             if (result.Success)
             {
                 return Ok(result);
             }
-            return BadRequest(result);
+            return BadRequest(result.Message);
         }
 
     }

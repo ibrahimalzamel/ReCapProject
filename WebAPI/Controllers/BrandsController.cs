@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-
+        //Nissan
         //GetBrandName
         [HttpGet("getbrandname")]
         public IActionResult GetBrandName(string name)

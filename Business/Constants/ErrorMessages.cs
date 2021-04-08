@@ -17,7 +17,7 @@ namespace Business.Constants
 
         private static string customerNotAdded = "HATA. Müşteri Eklenemedi";
         private static string customerNotDeleted = "HATA. Müşteri Silinemedi";
-
+        private static string BrandNameAlreadyExistsError = "BrandName is not Exists";
 
         private static string rentalAddedError = "Araç teslim edilmediği için tekrar kiraya verilemez";
         private static string rentalUpdateReturnDate = "Araç Teslim Alındı";
@@ -38,5 +38,6 @@ namespace Business.Constants
         public static string CarImageLimitExceeded { get => carImageLimitExceeded; set => carImageLimitExceeded = value; }
         public static string ProductNameInvalid { get => productNameInvalid; set => productNameInvalid = value; }
         public static string AuthorizationDenied1 { get => AuthorizationDenied; set => AuthorizationDenied = value; }
+        public static string BrandNameAlreadyExistsError1 { get => BrandNameAlreadyExistsError; set => BrandNameAlreadyExistsError = value; }
     }
 }

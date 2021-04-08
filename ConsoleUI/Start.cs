@@ -10,25 +10,25 @@ namespace ConsoleUI
     public class Start
     {
 
-        public void CarTest()
-        {
+        //public void CarTest()
+        //{
 
-            CarManager car1 = new CarManager(new EfCarDal());
+        //    CarManager car1 = new CarManager(new EfCarDal());
                     
-            var result = car1.GetAll();
+        //    var result = car1.GetAll();
 
-            foreach (var car in result.Data)
-            {
-                Console.WriteLine("Car ID : " + car.CarId);
-                Console.WriteLine("BrandId : " + car.BrandId);
-                Console.WriteLine("Color ID : " + car.ColorId);
-                Console.WriteLine("Daily Price : " + car.DailyPrice);
-                Console.WriteLine("Description : " + car.Descriptio);
+        //    foreach (var car in result.Data)
+        //    {
+        //        Console.WriteLine("Car ID : " + car.CarId);
+        //        Console.WriteLine("BrandId : " + car.BrandId);
+        //        Console.WriteLine("Color ID : " + car.ColorId);
+        //        Console.WriteLine("Daily Price : " + car.DailyPrice);
+        //        Console.WriteLine("Description : " + car.Descriptio);
 
-            }
+        //    }
 
            
-        }
+        //}
 
         public void ColorTest()
         {
