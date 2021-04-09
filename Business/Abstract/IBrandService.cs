@@ -10,6 +10,6 @@ namespace Business.Abstract
 {
    public  interface IBrandService : ICrudService<Brand>
     {
-        IDataResult<List<Brand>> GetBrandName(string brandName);
+        IDataResult <Brand> GetBrandName(string brandName);
     }
 }

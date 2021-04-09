@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         }
 
         // GetColorName
-        [HttpGet(" ")]
+        [HttpGet("getbycolorname")]
         public IActionResult GetColorName(string name)
         {
             var result = _colorService.GetColorName(name);

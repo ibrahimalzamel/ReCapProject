@@ -23,13 +23,15 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
+
+
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color color)
         {
             var result = CheckIfColorNameExists(color.ColorName);
             if (result.Success)
             {
-                return result;
+                return new ErrorResult(ErrorMessages.ColorNotAdded);
             }
             _colorDal.Add(color);
             return new SuccessResult(SuccessMessages.ColorAdded);
@@ -38,7 +40,11 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Delete(Color Color)
         {
-
+            var result = _colorDal.Get(c=>c.ColorId==Color.ColorId);
+            if (result == null)
+            {
+                return new  ErrorResult(ErrorMessages.ColorNotDeleted);
+            }
             _colorDal.Delete(Color);
             return new SuccessResult(SuccessMessages.ColorDeleted);
         }
@@ -46,20 +52,35 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ColorValidator))]
         public IDataResult<List<Color>> GetAll()
         {
+
+            if (_colorDal.GetAll()==null)
+            {
+                return new ErrorDataResult<List<Color>>(ErrorMessages.ColorNameAlreadyExistsError);
+            }
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll(),SuccessMessages.ColorListed);
         }
 
         [ValidationAspect(typeof(ColorValidator))]
         public IDataResult<Color> GetByID(int id)
         {
+            var result = _colorDal.Get(c=>c.ColorId==id);
+            if (result == null)
+            {
+                return new ErrorDataResult<Color>(ErrorMessages.ColorNameAlreadyExistsError);
+            }
             return new SuccessDataResult<Color>(_colorDal.Get(c =>c.ColorId == id),SuccessMessages.ColorListed);
         }
 
 
         [ValidationAspect(typeof(ColorValidator))]
-        public IDataResult<List<Color>> GetColorName(string colorName)
+        public IDataResult<Color> GetColorName(string colorName)
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(c => c.ColorName == colorName), SuccessMessages.ColorListed);
+            var result = CheckIfColorNameExists(colorName);
+            if (!result.Success)
+            {
+                return new ErrorDataResult<Color>(ErrorMessages.ColorNameAlreadyExistsError);
+            }
+            return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorName == colorName), SuccessMessages.ColorListed);
         }
 
         [ValidationAspect(typeof(ColorValidator))]
@@ -68,7 +89,7 @@ namespace Business.Concrete
             var result = CheckIfColorNameExists(Color.ColorName);
             if (result.Success)
             {
-                return result;
+                return new ErrorResult(ErrorMessages.ColorNotUpdated);
             }
             _colorDal.Update(Color);
             return new SuccessResult(SuccessMessages.ColorUpdate);
@@ -77,9 +98,9 @@ namespace Business.Concrete
         private IResult CheckIfColorNameExists(string colorName)
         {
             var result = _colorDal.GetAll(c => c.ColorName == colorName).Any();
-            if (result)
+            if (!result)
             {
-                return new ErrorResult("ErrorMessages.ColorNameExistsError");
+                return new ErrorResult();
             }
 
             return new SuccessResult();

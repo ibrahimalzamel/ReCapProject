@@ -22,13 +22,14 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
       
+
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
             var result = CheckIfBrandNameExists(brand.BrandName);
             if (result.Success)
             {
-                return result;
+                return new ErrorResult(ErrorMessages.BrandNotAdded);
             }
             _brandDal.Add(brand);
             return new SuccessResult(SuccessMessages.BrandAdded);
@@ -38,27 +39,47 @@ namespace Business.Concrete
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Delete(Brand brand)
         {
+
+            var result =_brandDal.Get(b=>b.BrandId==brand.BrandId);
+            if (result==null)
+            {
+                return new ErrorResult(ErrorMessages.BrandNotDeleted);
+            }
             _brandDal.Delete(brand);
             return new SuccessResult(SuccessMessages.BrandDeleted);
         }
 
+        
         [ValidationAspect(typeof(BrandValidator))]
         public IDataResult<List<Brand>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),SuccessMessages.BrandsListed);
+            return _brandDal.GetAll()==null
+                ? new ErrorDataResult<List<Brand>>(ErrorMessages.BrandNameAlreadyExistsError1)
+                : (IDataResult<List<Brand>>)new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),SuccessMessages.BrandsListed);
         }
 
 
         [ValidationAspect(typeof(BrandValidator))]
-        public IDataResult<List<Brand>> GetBrandName(string brandName)
+        public IDataResult<Brand> GetBrandName(string brandName)
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(b => b.BrandName == brandName), SuccessMessages.BrandsListed);
+            var result = CheckIfBrandNameExists(brandName);
+            if (!result.Success)
+            {
+                return new ErrorDataResult<Brand>(ErrorMessages.BrandNameAlreadyExistsError1);
+            }
+
+            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.BrandName == brandName), SuccessMessages.BrandsListed);
         }
 
 
         [ValidationAspect(typeof(BrandValidator))]
         public IDataResult<Brand> GetByID(int id)
         {
+            var result = _brandDal.Get(b => b.BrandId == id);
+            if (result == null)
+            {
+                return new ErrorDataResult<Brand>(ErrorMessages.BrandNameAlreadyExistsError1);
+            }
             return new SuccessDataResult<Brand>(_brandDal.Get(b=>b.BrandId == id ),SuccessMessages.BrandsListed);
 
         }
@@ -67,9 +88,9 @@ namespace Business.Concrete
         public IResult Update(Brand brand)
         {
             var result = CheckIfBrandNameExists(brand.BrandName);
-            if (result != null)
+            if (result.Success)
             {
-                return result;
+                return new ErrorResult(ErrorMessages.BrandNotUpdated);
             }
             _brandDal.Update(brand);
             return new SuccessResult(SuccessMessages.BrandUpdate);

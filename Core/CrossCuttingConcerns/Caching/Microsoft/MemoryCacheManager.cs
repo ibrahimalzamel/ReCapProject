@@ -61,7 +61,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
             {
                 _memoryCache.Remove(key);
             }
-            // son saat 15,derstyiz 
+           
         }
     }
 }

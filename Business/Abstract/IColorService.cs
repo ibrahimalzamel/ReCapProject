@@ -10,6 +10,6 @@ namespace Business.Abstract
 {
     public interface IColorService : ICrudService<Color>
     {
-        IDataResult<List<Color>> GetColorName(string colorName);
+        IDataResult<Color> GetColorName(string colorName);
     }
 }

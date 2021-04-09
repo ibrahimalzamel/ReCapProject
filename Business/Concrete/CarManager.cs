@@ -14,6 +14,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -36,18 +37,24 @@ namespace Business.Concrete
         public IResult Add(Car car)
         {
             var result = BusinessRules.Run(CheckIfBrandExists(car.BrandId), CheckIfColorExists(car.ColorId));
-            if (result != null)
+            if (result.Success)
             {
-                return result;
+                return new ErrorResult(ErrorMessages.CarNotAdded);
             }
             _carDal.Add(car);
-                return new SuccessResult(SuccessMessages.CarAdded);          
+            return new SuccessResult(SuccessMessages.CarAdded);          
         }
 
         [SecuredOperation("car.add,admin")]
-        [ValidationAspect(typeof(CarValidator))]
+       // [ValidationAspect(typeof(CarValidator))]
         public IResult Delete(Car car)
         {
+            var car1 = _carDal.Get(c => c.CarId == car.CarId);
+           
+            if (car1==null)
+            {
+                return new ErrorResult(ErrorMessages.CarNotDeleted);
+            }
             _carDal.Delete(car);
             return new SuccessResult(SuccessMessages.CarDeleted);
         }
@@ -55,36 +62,60 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
-           
+            if (_carDal.GetAll()==null)
+            {
+                return new ErrorDataResult<List<Car>>(ErrorMessages.CarNameAlreadyExistsError);
+            }
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), SuccessMessages.CarsListed);
         }
 
 
         [CacheAspect]
-        public IDataResult<List<Car>> GetAllByBrandId(int id)
+        public IDataResult<List<Car>> GetByBrandId(int id)
         {
+            var result2 = _brandService.GetByID(id);
+           // var result = _carDal.GetAll(c => c.BrandId == id).Any();
+            if (result2==null)
+            {
+                return new ErrorDataResult<List<Car>>(ErrorMessages.CarNameAlreadyExistsError);
+            }
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.BrandId==id),SuccessMessages.CarsListed);
         }
 
 
-        [ValidationAspect(typeof(CarValidator))]
-        public IDataResult<List<Car>> GetAllByColorId(int id)
+        // [ValidationAspect(typeof(CarValidator))]
+        [CacheAspect]
+        public IDataResult<List<Car>> GetByColorId(int id)
         {
+            var result = _colorService.GetByID(id);
+            if (result.Data==null)
+            {
+                return new ErrorDataResult<List<Car>>(ErrorMessages.CarNameAlreadyExistsError);
+            }
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id), SuccessMessages.CarsListed);
         }
 
 
-        [ValidationAspect(typeof(CarValidator))]
+       // [ValidationAspect(typeof(CarValidator))]
         public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
         {
+            if (_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max)==null)
+            {
+                return new ErrorDataResult<List<Car>>(ErrorMessages.CarNameAlreadyExistsError);
+
+            }
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c=>c.DailyPrice>=min && c.DailyPrice<=max),SuccessMessages.CarsListed);
         }
 
 
         [CacheAspect]
-        [PerformanceAspect(5)]
+       // [PerformanceAspect(5)]
         public IDataResult<Car> GetByID(int id)
         {
+            if (_carDal.Get(c => c.CarId == id) == null)
+            {
+                return new ErrorDataResult<Car>(ErrorMessages.CarNameAlreadyExistsError);
+            }
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == id), SuccessMessages.CarsListed);
         }
 
@@ -92,7 +123,12 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarValidator))]
         public IDataResult<List<CarDetailDto>> GetCarsDetailDtos()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetailDtos(),SuccessMessages.CarsListed);
+            if (_carDal.GetCarsDetailDtos()==null)
+            {
+                return new ErrorDataResult<List<CarDetailDto>>(ErrorMessages.CarNameAlreadyExistsError);
+            }
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetailDtos(), SuccessMessages.CarsListed);
+
         }
 
 
@@ -102,9 +138,9 @@ namespace Business.Concrete
         public IResult Update(Car car)
         {
             var result = BusinessRules.Run(CheckIfBrandExists(car.BrandId), CheckIfColorExists(car.ColorId));
-            if (result != null)
+            if (result!=null)
             {
-                return result;
+                return new ErrorResult(ErrorMessages.CarNotUpdated);
             }
             _carDal.Update(car);
             return new SuccessResult(SuccessMessages.CarUpdated);
@@ -114,18 +150,20 @@ namespace Business.Concrete
         private IResult CheckIfBrandExists(int brandId)
         {
             var result = _brandService.GetByID(brandId);
-            if (result == null)
+            if (result.Data == null)
             {
-                return new ErrorResult(ErrorMessages.BrandNameAlreadyExistsError1);
+                return new ErrorResult();
             }
             return new SuccessResult();
         }
+
+      
         private IResult CheckIfColorExists(int colorId)
         {
             var result = _colorService.GetByID(colorId);
             if (result.Data == null)
             {
-                return new ErrorResult("ErrorMessages.ColorNotExistsError");
+                return new ErrorResult();
             }
             return new SuccessResult();
         }
