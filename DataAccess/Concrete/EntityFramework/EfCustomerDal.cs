@@ -16,8 +16,16 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (NorthwindContext context = new NorthwindContext())
             {
-                var result = from cus in filter is null ? context.Customers : context.Customers.Where(filter)
+
+                /**     var result = from c in context.Cars
+                             join b in context.Brands on c.BrandId equals b.BrandId
+                             join co in context.Colors on c.ColorId equals co.ColorId
+                             join carI in context.CarImages on c.CarId equals carI.CarId
+                             select new CarDetailDto
+                             {*/
+                var result = from cus in context.Customers 
                              join usr in context.Users on cus.UserID equals usr.Id
+
                              select new CustomerDetailDto
                              {
                                  CustomerId = cus.CustomersID,

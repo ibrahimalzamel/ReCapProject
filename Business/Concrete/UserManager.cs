@@ -53,7 +53,12 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserValidator))]
         public IDataResult<User> GetByID(int id)
         {
-            return new SuccessDataResult<User>(_userDal.Get(u=>u.Id==id),SuccessMessages.UsersListed);
+            var result = CheckIfUserExists(id);
+            if (result.Success== false)
+            {
+                return new ErrorDataResult<User>(ErrorMessages.UserNameAlreadyExistsError);
+            }
+            return new SuccessDataResult<User>(result.Data,SuccessMessages.UsersListed);
         }
 
         [ValidationAspect(typeof(UserValidator))]
@@ -92,5 +97,17 @@ namespace Business.Concrete
         {
             return _userDal.GetClaims(user);
         }
+
+        private IDataResult<User> CheckIfUserExists(int id)
+        {
+            var result = _userDal.Get(u => u.Id == id);
+            if (result == null)
+            {
+                return new ErrorDataResult<User>();
+            }
+            return new SuccessDataResult<User>(result);
+        }
+
+
     }
 }

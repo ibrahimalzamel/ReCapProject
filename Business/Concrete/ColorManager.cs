@@ -40,8 +40,8 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ColorValidator))]
         public IResult Delete(Color Color)
         {
-            var result = _colorDal.Get(c=>c.ColorId==Color.ColorId);
-            if (result == null)
+            var result = CheckIfColorExists(Color.ColorId);
+            if (!result.Success)
             {
                 return new  ErrorResult(ErrorMessages.ColorNotDeleted);
             }
@@ -63,12 +63,12 @@ namespace Business.Concrete
         [ValidationAspect(typeof(ColorValidator))]
         public IDataResult<Color> GetByID(int id)
         {
-            var result = _colorDal.Get(c=>c.ColorId==id);
-            if (result == null)
+            var result = CheckIfColorExists(id);
+            if (!result.Success)
             {
                 return new ErrorDataResult<Color>(ErrorMessages.ColorNameAlreadyExistsError);
             }
-            return new SuccessDataResult<Color>(_colorDal.Get(c =>c.ColorId == id),SuccessMessages.ColorListed);
+            return new SuccessDataResult<Color>(result.Data,SuccessMessages.ColorListed);
         }
 
 
@@ -93,6 +93,18 @@ namespace Business.Concrete
             }
             _colorDal.Update(Color);
             return new SuccessResult(SuccessMessages.ColorUpdate);
+        }
+
+
+
+        private IDataResult<Color> CheckIfColorExists(int id)
+        {
+            var result = _colorDal.Get(c => c.ColorId == id);
+            if (result == null)
+            {
+                return new ErrorDataResult<Color>();
+            }
+            return new SuccessDataResult<Color>(result);
         }
 
         private IResult CheckIfColorNameExists(string colorName)

@@ -38,6 +38,12 @@ namespace Business.Constants
         private static string brandNotUpdated = "HATA. Marka Güncellemedi";
         private static string BrandNameAlreadyExistsError = "HATA.Marka adı Mevcut değil";
 
+        private static string rentalNotAdded = "HATA. kiralama Eklenmedi";
+        private static string rentalNotDeleted = "HATA. kiralama Silinemedi";
+        private static string rentalNotUpdated = "HATA. kiralama Güncellemedi";
+        private static string rentalNameAlreadyExistsError = "HATA.kiralama adı Mevcut değil"; 
+
+
         private static string rentalAddedError = "Araç teslim edilmediği için tekrar kiraya verilemez";
         private static string rentalUpdateReturnDate = "Araç Teslim Alındı";
 
@@ -74,5 +80,9 @@ namespace Business.Constants
         public static string UserNotAdded { get => userNotAdded; set => userNotAdded = value; }
         public static string UserNotUpdated { get => userNotUpdated; set => userNotUpdated = value; }
         public static string UserNameAlreadyExistsError { get => userNameAlreadyExistsError; set => userNameAlreadyExistsError = value; }
+        public static string RentalNotAdded { get => rentalNotAdded; set => rentalNotAdded = value; }
+        public static string RentalNotDeleted { get => rentalNotDeleted; set => rentalNotDeleted = value; }
+        public static string RentalNotUpdated { get => rentalNotUpdated; set => rentalNotUpdated = value; }
+        public static string RentalNameAlreadyExistsError { get => rentalNameAlreadyExistsError; set => rentalNameAlreadyExistsError = value; }
     }
 }

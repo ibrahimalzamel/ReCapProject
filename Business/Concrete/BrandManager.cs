@@ -26,8 +26,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
-            var result = CheckIfBrandNameExists(brand.BrandName);
-            if (result.Success)
+            if (CheckIfBrandNameExists(brand.BrandName).Success)
             {
                 return new ErrorResult(ErrorMessages.BrandNotAdded);
             }
@@ -39,9 +38,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Delete(Brand brand)
         {
-
-            var result =_brandDal.Get(b=>b.BrandId==brand.BrandId);
-            if (result==null)
+            if (!CheckIfBrandExists(brand.BrandId).Success)
             {
                 return new ErrorResult(ErrorMessages.BrandNotDeleted);
             }
@@ -75,20 +72,20 @@ namespace Business.Concrete
         [ValidationAspect(typeof(BrandValidator))]
         public IDataResult<Brand> GetByID(int id)
         {
-            var result = _brandDal.Get(b => b.BrandId == id);
-            if (result == null)
+            var result = CheckIfBrandExists(id);
+            if (!result.Success)
             {
                 return new ErrorDataResult<Brand>(ErrorMessages.BrandNameAlreadyExistsError1);
             }
-            return new SuccessDataResult<Brand>(_brandDal.Get(b=>b.BrandId == id ),SuccessMessages.BrandsListed);
+            return new SuccessDataResult<Brand>(result.Data,SuccessMessages.BrandsListed);
 
         }
      
+
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Update(Brand brand)
         {
-            var result = CheckIfBrandNameExists(brand.BrandName);
-            if (result.Success)
+            if (CheckIfBrandNameExists(brand.BrandName).Success)
             {
                 return new ErrorResult(ErrorMessages.BrandNotUpdated);
             }
@@ -96,6 +93,15 @@ namespace Business.Concrete
             return new SuccessResult(SuccessMessages.BrandUpdate);
         }
 
+        private IDataResult<Brand> CheckIfBrandExists(int id)
+        {
+            var result = _brandDal.Get(b => b.BrandId == id);
+            if (result == null)
+            {
+                return new ErrorDataResult<Brand>();
+            }
+            return new SuccessDataResult<Brand>(result);
+        }
 
         private IResult CheckIfBrandNameExists(string brandName)
         {
