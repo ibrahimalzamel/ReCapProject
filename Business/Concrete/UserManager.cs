@@ -98,6 +98,9 @@ namespace Business.Concrete
             return _userDal.GetClaims(user);
         }
 
+
+        //*********** Check ***********////
+
         private IDataResult<User> CheckIfUserExists(int id)
         {
             var result = _userDal.Get(u => u.Id == id);

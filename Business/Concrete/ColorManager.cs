@@ -96,6 +96,7 @@ namespace Business.Concrete
         }
 
 
+        //*********** Check ***********////
 
         private IDataResult<Color> CheckIfColorExists(int id)
         {

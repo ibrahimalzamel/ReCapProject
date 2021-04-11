@@ -46,7 +46,7 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("car.add,admin")]
-       // [ValidationAspect(typeof(CarValidator))]
+       //[ValidationAspect(typeof(CarValidator))]
         public IResult Delete(Car car)
         {
             if (!CheckIfCarExists(car.CarId).Success)
@@ -145,6 +145,9 @@ namespace Business.Concrete
         }
 
 
+
+        //*********** Check ***********////
+
         private IResult CheckIfBrandExists(int brandId)
         {
             var result = _brandService.GetByID(brandId);
@@ -163,7 +166,6 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-       
         private IDataResult<List<Car>> CheckIfBrandInCarExists(int id)
         {
             var result = _carDal.GetAll(c => c.BrandId == id);
@@ -183,7 +185,6 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<List<Car>>(result);
         }
-
         private IDataResult<Car> CheckIfCarExists(int id)
         {
             var result = _carDal.Get(c => c.CarId == id);

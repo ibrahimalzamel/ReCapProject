@@ -101,6 +101,7 @@ namespace Business.Concrete
             return new SuccessResult(SuccessMessages.CustomerUpdated);
         }
 
+        //*********** Check ***********////
         private IResult CheckIfUserExists(int userId)
         {
             var result = _userService.GetByID(userId);

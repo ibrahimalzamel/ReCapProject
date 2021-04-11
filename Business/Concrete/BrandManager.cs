@@ -93,6 +93,9 @@ namespace Business.Concrete
             return new SuccessResult(SuccessMessages.BrandUpdate);
         }
 
+
+        //*********** Check ***********////
+
         private IDataResult<Brand> CheckIfBrandExists(int id)
         {
             var result = _brandDal.Get(b => b.BrandId == id);
