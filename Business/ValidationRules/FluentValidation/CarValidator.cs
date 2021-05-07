@@ -13,7 +13,6 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(c => c.BrandId).NotNull();
             RuleFor(c => c.ColorId).NotNull();
             RuleFor(c => c.Descriptio).NotEmpty();
-            RuleFor(c => c.ModelYaer).NotEmpty();
             RuleFor(c => c.DailyPrice).NotEmpty();
 
             RuleFor(c => c.Descriptio).MinimumLength(2);

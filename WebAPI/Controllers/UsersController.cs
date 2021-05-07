@@ -70,16 +70,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpGet("getbyusername")]
-        public IActionResult GetByUserName(string name)
-        {
-            var result = _userService.GetByUserName(name);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+       
         //Add
         [HttpPost("add")]
         public IActionResult Add(User user)
