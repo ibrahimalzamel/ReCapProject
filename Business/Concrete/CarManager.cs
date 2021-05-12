@@ -31,7 +31,7 @@ namespace Business.Concrete
             _colorService = colorService;
         }
 
-       // [SecuredOperation("car.add,admin")]
+        [SecuredOperation("car.add,admin")]
         [CacheRemoveAspect("ICarService.Get")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
@@ -130,7 +130,7 @@ namespace Business.Concrete
         }
 
 
-      //   [SecuredOperation("car.add,admin")]
+        [SecuredOperation("car.add,admin")]
         [CacheRemoveAspect("ICarService.Get")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
