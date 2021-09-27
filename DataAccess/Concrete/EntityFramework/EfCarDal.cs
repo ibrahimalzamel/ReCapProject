@@ -35,6 +35,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  ModelYear = c.ModelYear,
                                  CarName = c.CarName,
                                  FuelName = c.FuelName,
+                                 ImagePath = c.ImagePath,
 
                              };
                 return filter != null ? result.Where(filter).ToList() : result.ToList();

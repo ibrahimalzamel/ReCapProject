@@ -10,37 +10,33 @@ namespace ConsoleUI
     public class Start
     {
 
-        //public void CarTest()
-        //{
+        public void CarTest()
+        {
 
-        //    CarManager car1 = new CarManager(new EfCarDal());
-                    
-        //    var result = car1.GetAll();
+            CarManager car1 = new CarManager(new EfCarDal());
+            var result = car1.GetAll();
 
-        //    foreach (var car in result.Data)
-        //    {
-        //        Console.WriteLine("Car ID : " + car.CarId);
-        //        Console.WriteLine("BrandId : " + car.BrandId);
-        //        Console.WriteLine("Color ID : " + car.ColorId);
-        //        Console.WriteLine("Daily Price : " + car.DailyPrice);
-        //        Console.WriteLine("Description : " + car.Descriptio);
+            foreach (var car in result.Data)
+            {
+                Console.WriteLine("Car ID : " + car.CarId);
+                Console.WriteLine("BrandId : " + car.BrandId);
+                Console.WriteLine("Color ID : " + car.ColorId);
+                Console.WriteLine("Daily Price : " + car.DailyPrice);
+                Console.WriteLine("Description : " + car.Descriptio);
 
-        //    }
+            }
 
-           
-        //}
+        }
 
         public void ColorTest()
         {
             // ***** Color Class manager ******
-            ColorManager color1 = new ColorManager(new EfColorDal());
-            //  color1.Add(new Color { ColorId = 88, ColorName = "Mavi" });
-            var result = color1.GetAll();
-            foreach (var color in result.Data)
-            {
-                Console.WriteLine("Color ID : " + color.ColorId);
-                Console.WriteLine("Color Name : " + color.ColorName);
-            }
+         //   ColorManager color1 = new ColorManager(new EfColorDal());
+            EfColorDal color2 = new EfColorDal();
+            var result = color2.Get(c=>c.ColorId==1);
+            Console.WriteLine("Color ID : " + result.ColorId);
+            Console.WriteLine("Color Name : " + result.ColorName);
+            
         }
 
         public void BrandTest()

@@ -30,8 +30,12 @@ namespace Business.Concrete
             _brandService = brandService;
             _colorService = colorService;
         }
-
-        [SecuredOperation("car.add,admin")]
+        public CarManager(ICarDal carDal)
+        {
+            _carDal = carDal;
+           
+        }
+        //  [SecuredOperation("car.add,admin")]
         [CacheRemoveAspect("ICarService.Get")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)

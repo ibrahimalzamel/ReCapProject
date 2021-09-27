@@ -17,7 +17,6 @@ namespace Entities.Concrete
         public string FuelName { get; set; }
         public decimal DailyPrice{ get; set; }
         public string Descriptio { get; set; }
-
-
+        public string ImagePath { get; set; }
     }
 }

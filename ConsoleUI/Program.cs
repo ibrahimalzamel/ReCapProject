@@ -7,9 +7,11 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             Start start = new Start();
-           //start.CarTest();
-          // start.BrandTest();
-           start.ColorTest();
+          start.CarTest();
+          //// start.BrandTest();
+          start.ColorTest();
+          
+
         }
     }
 }
