@@ -9,7 +9,7 @@ Veritabanı nesneleri için oluşturulmuş **Entities Katmanı**'nda **Abstract*
 <br>:file_folder:`Abstract`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:page_facing_up: ~~IEntity.cs~~ (Ortak Kod Olduğu İçin Core Katmanına Aktarıldı.)
 <br> <br> :file_folder:`Concrete`  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:page_facing_up: [Brand.cs](https://github.com/ibrahimalzamel/ReCapProject/blob/master/Entities/Concrete/Brand.cs)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📄: [Brand.cs](https://github.com/ibrahimalzamel/ReCapProject/blob/master/Entities/Concrete/Brand.cs)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:page_facing_up: [Car.cs](https://github.com/ibrahimalzamel/ReCapProject/blob/master/Entities/Concrete/Car.cs)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:page_facing_up: [Color.cs](https://github.com/ibrahimalzamel/ReCapProject/blob/master/Entities/Concrete/Color.cs)  
 <br>
